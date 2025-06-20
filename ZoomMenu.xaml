@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <MenuItem x:Key="ZoomMenu" Header="Zoom">
+        <MenuItem Header="Zoom in" InputGestureText="=, Add" />
+        <MenuItem Header="Zoom out" InputGestureText="-, Subtract" />
+        <MenuItem Header="Custom zoom..." InputGestureText="Z" />
+        <MenuItem Header="Actual size" InputGestureText="0, NumPad0" />
+        <Separator />
+        <MenuItem Header="Auto zoom" InputGestureText="1, NumPad1" IsCheckable="True" />
+        <MenuItem Header="Lock zoom ratio" InputGestureText="2, NumPad2" IsCheckable="True" />
+        <MenuItem Header="Scale to width" InputGestureText="3, NumPad3" IsCheckable="True" />
+        <MenuItem Header="Scale to height" InputGestureText="4, NumPad4" IsCheckable="True" />
+        <MenuItem Header="Scale to fit" InputGestureText="5, NumPad5" IsCheckable="True" />
+        <MenuItem Header="Scale to fill" InputGestureText="6, NumPad6" IsCheckable="True" />
+    </MenuItem>
+
+</ResourceDictionary>

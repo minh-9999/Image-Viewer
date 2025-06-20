@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<MenuItem x:Key="NavigationMenu" Header="Navigation">
+		<MenuItem Header="View next image" InputGestureText="Right"/>
+		<MenuItem Header="View previous image" InputGestureText="Left"/>
+		<Separator />
+		<MenuItem Header="Go to..." InputGestureText="F"/>
+		<MenuItem Header="Go to first image" InputGestureText="Home"/>
+		<MenuItem Header="Go to last image" InputGestureText="End"/>
+		<Separator />
+		<MenuItem Header="View next frame" InputGestureText="Ctrl+Right" IsEnabled="False"/>
+		<MenuItem Header="View previous frame" InputGestureText="Ctrl+Left" IsEnabled="False"/>
+		<MenuItem Header="View first frame" InputGestureText="Ctrl+Home" IsEnabled="False"/>
+		<MenuItem Header="View last frame" InputGestureText="Ctrl+End" IsEnabled="False"/>
+	</MenuItem>
+
+</ResourceDictionary>

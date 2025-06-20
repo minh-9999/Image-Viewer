@@ -1,0 +1,10 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <MenuItem x:Key="HelpMenu" Header="Help">
+        <MenuItem Header="About" InputGestureText="F1"/>
+        <MenuItem Header="Check for Updates" InputGestureText="F6"/>
+    </MenuItem>
+
+
+</ResourceDictionary>

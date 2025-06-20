@@ -1,0 +1,22 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <MenuItem x:Key="LayoutMenu" Header="Layout">
+        <MenuItem Header="Toolbar" IsCheckable="True" 
+                  InputGestureText="T" 
+                  x:Name="ToolbarMenuItem" />
+
+        <MenuItem Header="Gallery panel" IsCheckable="True" 
+                  InputGestureText="G" 
+                  x:Name="GalleryPanelMenuItem" />
+
+        <MenuItem Header="Checkerboard background" IsCheckable="True" 
+                  InputGestureText="B" 
+                  x:Name="CheckerboardMenuItem" />
+        <Separator />
+
+        <MenuItem Header="Keep window always on top" IsCheckable="True" 
+                  x:Name="AlwaysOnTopMenuItem" />
+    </MenuItem>
+
+</ResourceDictionary>

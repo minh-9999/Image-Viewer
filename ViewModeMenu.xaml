@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <!--
+        <MenuItem Header="Window Fit" InputGestureText="F9" />
+        <MenuItem Header="Frameless" InputGestureText="F10" />
+        <MenuItem Header="Full Screen" InputGestureText="F11" />
+        <MenuItem Header="Slideshow" InputGestureText="F12" />
+    -->
+
+    <MenuItem x:Key="WindowFitMenuItem" Header="Window Fit" InputGestureText="F9" />
+    <MenuItem x:Key="FramelessMenuItem" Header="Frameless" InputGestureText="F10" />
+    <MenuItem x:Key="FullScreenMenuItem" Header="Full Screen" InputGestureText="F11" />
+    <MenuItem x:Key="SlideshowMenuItem" Header="Slideshow" InputGestureText="F12" />
+
+
+</ResourceDictionary>

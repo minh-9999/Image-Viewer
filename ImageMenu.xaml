@@ -1,0 +1,30 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <MenuItem x:Key="ImageMenu" Header="Image">
+        <MenuItem Header="View channels" InputGestureText="Shift+C" />
+        <MenuItem Header="Loading orders" InputGestureText="Shift+O" />
+        <Separator/>
+
+        <MenuItem Header="Rotate left" InputGestureText="Ctrl+." />
+        <MenuItem Header="Rotate right" InputGestureText="Ctrl+/" />
+        <MenuItem Header="Flip Horizontal" InputGestureText="Ctrl+;" />
+        <MenuItem Header="Flip Vertical" InputGestureText="Ctrl+'" />
+        <Separator/>
+
+        <MenuItem Header="Rename image..." InputGestureText="F2" />
+        <MenuItem Header="Move to the Recycle Bin" InputGestureText="Delete" />
+        <MenuItem Header="Delete permanently" InputGestureText="Shift+Delete" />
+        <Separator/>
+
+        <MenuItem Header="Start / stop animating image" InputGestureText="Ctrl+Space" IsEnabled="False" />
+        <MenuItem Header="Export image frames..." InputGestureText="Ctrl+J" />
+        <MenuItem Header="Set as Desktop background" />
+        <MenuItem Header="Set as Lock screen image" />
+        <MenuItem Header="Open image location" InputGestureText="L" />
+        <Separator/>
+
+        <MenuItem Header="Image properties" InputGestureText="Ctrl+I" />
+    </MenuItem>
+
+</ResourceDictionary>

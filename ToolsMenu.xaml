@@ -1,0 +1,17 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:Class="ImageViewerWPF.ToolsMenu">
+
+    <MenuItem x:Key="ToolsMenu" Header="Tools">
+        <MenuItem Header="Color picker" InputGestureText="K" IsCheckable="True"/>
+        <MenuItem Header="Crop image" InputGestureText="C" IsCheckable="True"/>
+        <MenuItem Header="Frame navigation" InputGestureText="P" IsCheckable="True"/>
+        <Separator/>
+        <MenuItem Header="ExifGlass - EXIF metadata viewer" InputGestureText="X" IsCheckable="True"/>
+        <Separator/>
+        <MenuItem Header="Get more tools..." />
+        <Separator/>
+        <MenuItem Header="Set default photo viewer" InputGestureText="Ctrl+G" />
+        <MenuItem Header="Remove default photo viewer" InputGestureText="Ctrl+H"/>
+    </MenuItem>
+</ResourceDictionary>
