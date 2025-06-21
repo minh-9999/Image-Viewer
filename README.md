@@ -24,13 +24,21 @@ A modern, lightweight image viewer application built using WPF (.NET), inspired 
   - `SharpVectors.Wpf`
   - `SixLabors.ImageSharp`
 
+```bash
+# Install required packages on NuGet:
+dotnet add package Magick.NET-Q16-AnyCPU
+dotnet add package SharpVectors.Wpf
+dotnet add package SixLabors.ImageSharp
+
+```
+
 ### Build
 
 1. Clone the repository:
 
 ```bash
 git clone https://github.com/minh-9999/Image-Viewer.git
-cd WpfImageViewer
+cd ImageViewer
 ```
 
 2. Open the solution in Visual Studio and build the project.
@@ -40,18 +48,18 @@ cd WpfImageViewer
 Press `F5` in Visual Studio or run from terminal:
 
 ```bash
-dotnet run --project ImageViewerWPF
+dotnet run --project ImageViewer
 ```
 
 ## 📂 Project Structure
 
 ```
-ImageViewerWPF/
+ImageViewer/
 │
 ├── Resources/
-│   └── SVG/              # Theme icons (SVG files)
-│        └── theme.json   # Theme config file
-│        └── *svg files
+│   └── SVG/              # Folder containing SVG icons
+│        └── theme.json   # Configuration file for theme (map icon → function)
+│        └── *svg files	  # SVG icons used in toolbar/menu
 │
 │
 ├── App.xaml              # Application entry styles
