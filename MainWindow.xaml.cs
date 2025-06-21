@@ -8,6 +8,8 @@ using System.Windows.Media.Imaging;
 
 using SharpVectors.Converters;
 using SharpVectors.Renderers.Wpf;
+using ImageMagick;
+using System.Collections.ObjectModel;
 
 namespace ImageViewerWPF
 {
@@ -16,7 +18,7 @@ namespace ImageViewerWPF
     /// </summary>
     public partial class MainWindow
     {
-        //private double _currentZoom = 1.0;
+        private double _currentZoom = 1.0;
         public static BitmapImage CurrentImage { get; set; } = new BitmapImage();
         public static string CurrentImagePath { get; set; } = string.Empty;
         //public Image ImgViewer => this.ImgViewer;
@@ -24,6 +26,7 @@ namespace ImageViewerWPF
 
         //private List<string> _imagePaths = new List<string>();
         private List<string> _imagePaths = [];
+        private ObservableCollection<ImageItem> _images = [];
         private int _currentIndex;
 
 
@@ -32,6 +35,7 @@ namespace ImageViewerWPF
             InitializeComponent();
             InitializeToolbarButtonMap();
 
+
             var theme = ThemeLoader.LoadTheme("Resources/SVG/theme.json");
 
             if (theme != null)
@@ -39,6 +43,14 @@ namespace ImageViewerWPF
                 ApplyThemeIcons(theme);
             }
         }
+
+        public class ImageItem(string imagePath)
+        {
+            public string ImagePath { get; set; } = imagePath;
+
+            public BitmapImage Thumbnail { get; } = new(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+        }
+
 
         private void ApplyThemeIcons(ThemeConfig config)
         {
@@ -78,10 +90,10 @@ namespace ImageViewerWPF
             var reader = new FileSvgReader(settings);
             var drawing = reader.Read(filePath);
 
-            if (drawing is DrawingGroup group)
+            if (drawing != null)
             {
-                ApplyBrushToDrawing(group, overrideBrush);
-                return group;
+                ApplyBrushToDrawing(drawing, overrideBrush);
+                return drawing;
             }
 
             return null;
@@ -118,6 +130,77 @@ namespace ImageViewerWPF
                 { "ZoomOut", BtnZoomOut },
                 // Thêm các ánh xạ khác nếu có nhiều nút
             };
+        }
+
+
+        private void LoadImagesFromDirectory(string directoryPath, string? selectedImage = null)
+        {
+            string[] extensions = [".jpg", ".jpeg", ".png", ".bmp", ".gif", ".webp"];
+
+            var files = Directory.GetFiles(directoryPath)
+                .Where(f => extensions.Contains(Path.GetExtension(f).ToLower()))
+                .ToList();
+
+            _imagePaths = files;
+            _images.Clear();
+
+            foreach (var path in files)
+                _images.Add(new ImageItem(path));
+
+            GalleryPanel.ItemsSource = _images;
+
+            if (_images.Count > 0)
+            {
+                int selectedIndex = selectedImage != null
+                    ? _images.ToList().FindIndex(img => img.ImagePath == selectedImage)
+                    : 0;
+
+
+                GalleryPanel.SelectedIndex = selectedIndex >= 0 ? selectedIndex : 0;
+            }
+
+            MessageBox.Show($"Đã load {_images.Count} ảnh.");
+        }
+
+
+
+        private void GalleryPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (GalleryPanel.SelectedItem is ImageItem item)
+            {
+                _currentIndex = GalleryPanel.SelectedIndex;
+                ImgViewer.Source = new BitmapImage(new Uri(item.ImagePath));
+                ShowImageInfoWithMagick(item.ImagePath, _currentIndex, _imagePaths.Count, _currentZoom);
+            }
+        }
+
+        private void ShowImageInfoWithMagick(string imagePath, int currentIndex, int totalCount, double zoomRatio)
+        {
+            MessageBox.Show("Đang gọi ShowImageInfoWithMagick:\n" + imagePath);
+
+            try
+            {
+                var fileInfo = new FileInfo(imagePath);
+                using var magickImage = new MagickImage(imagePath);
+
+                FileNameText.Text = $"Name: {fileInfo.Name}";
+                ImageIndexText.Text = $"Image: {currentIndex + 1} of {totalCount}";
+                ZoomRatioText.Text = $"Zoom: {zoomRatio * 100:0}%";
+                DimensionsText.Text = $"Dimensions: {magickImage.Width} x {magickImage.Height}";
+
+                double sizeMb = fileInfo.Length / (1024.0 * 1024);
+                FileSizeText.Text = $"Size: {sizeMb:0.00} MB";
+
+                ColorSpaceText.Text = $"Color space: {magickImage.ColorSpace}";
+
+                var modified = fileInfo.LastWriteTime;
+                LastModifiedText.Text = $"Modified: {modified:yyyy-MM-dd HH:mm:ss}";
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi đọc ảnh bằng Magick.NET:\n" + ex.Message);
+            }
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
@@ -361,6 +444,23 @@ namespace ImageViewerWPF
             }
         }
 
+        private void BtnOpen_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "Image files|*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.webp",
+                Title = "Chọn ảnh"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                string selectedFile = dialog.FileName;
+                string folder = Path.GetDirectoryName(selectedFile)!;
+                LoadImagesFromDirectory(folder, selectedFile);
+            }
+        }
+
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         private static void AttachNavHandlers(MenuItem navMenu)
         {
@@ -398,7 +498,7 @@ namespace ImageViewerWPF
         {
             foreach (var item in zoomMenu.Items)
             {
-                if (item is MenuItem menuItem && menuItem.Header is string header)
+                if (item is MenuItem { Header: string header } menuItem)
                 {
                     switch (header)
                     {

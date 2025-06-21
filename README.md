@@ -64,7 +64,7 @@ ImageViewerWPF/
 
 ## 🖼️ Screenshot
 
-![App UI](https://raw.githubusercontent.com/yourusername/yourrepo/main/assets/screenshot.png)
+![App UI](https://raw.githubusercontent.com/minh-9999/Image-Viewer/refs/heads/master/docs/screenshot.PNG)
 
 ## 📄 License
 

@@ -21,19 +21,29 @@
                 <ResourceDictionary Source="SettingsMenu.xaml" />
                 <ResourceDictionary Source="HelpMenu.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <ItemsPanelTemplate x:Key="HorizontalItemsPanelTemplate">
+                <StackPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+
         </ResourceDictionary>
+
+
+
     </Window.Resources>
 
     <Grid>
 
         <!-- Grid Rows -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <!-- Toolbar row -->
-            <RowDefinition Height="*"/>
-            <!-- Image viewer -->
             <RowDefinition Height="Auto"/>
+            <!-- Image viewer -->
+            <RowDefinition Height="*"/>
             <!-- Gallery panel -->
+            <RowDefinition Height="Auto"/>
+            <!-- Image info panel (NEW) -->
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- ===== Toolbar ===== -->
@@ -48,7 +58,7 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                <Button x:Name="BtnOpen" Style="{StaticResource ToolbarButtonStyle}" ToolTip="Open"/>
+                <Button x:Name="BtnOpen" Style="{StaticResource ToolbarButtonStyle}" ToolTip="Open" Click="BtnOpen_Click"/>
                 <Button x:Name="BtnSave" Style="{StaticResource ToolbarButtonStyle}" ToolTip="Save"/>
                 <Button x:Name="BtnZoomIn" Style="{StaticResource ToolbarButtonStyle}" ToolTip="Zoom In"/>
                 <Button x:Name="BtnZoomOut" Style="{StaticResource ToolbarButtonStyle}" ToolTip="Zoom Out"/>
@@ -90,6 +100,34 @@
                  Background="WhiteSmoke"
                  BorderThickness="1"
                  Margin="5"
-                 HorizontalAlignment="Stretch"/>
+                 HorizontalAlignment="Stretch"
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                 SelectionChanged="GalleryPanel_SelectionChanged"
+                 ItemsPanel="{StaticResource HorizontalItemsPanelTemplate}">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding Thumbnail}" Width="100" Height="100" Margin="2"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+
+        <Border Grid.Row="3"
+                Margin="10"
+                Background="WhiteSmoke"
+                Padding="5">
+            <StackPanel x:Name="ImageInfoPanel">
+                <TextBlock x:Name="FileNameText"/>
+                <TextBlock x:Name="ImageIndexText"/>
+                <TextBlock x:Name="ZoomRatioText"/>
+                <TextBlock x:Name="DimensionsText"/>
+                <TextBlock x:Name="FileSizeText"/>
+                <TextBlock x:Name="ColorSpaceText"/>
+                <TextBlock x:Name="LastModifiedText"/>
+            </StackPanel>
+        </Border>
+
+
     </Grid>
 </Window>
